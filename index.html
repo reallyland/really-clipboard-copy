@@ -28,6 +28,7 @@
 
     <script type="module">
       import '/dist/really-clipboard-copy.js';
+      import '/dist/demo/code-configurator.js';
 
       const $ = s => document.body.querySelector(s);
 
@@ -119,69 +120,48 @@
     </header>
 
     <section>
-      <really-clipboard-copy>
-        <div class="container">
-          <input
-            class="copyable"
-            id="really-clipboard-copy-id"
-            type="text"
-            readonly
-            value="You're awesome!" />
-
-          <button for="really-clipboard-copy-for" class="copy-btn">Copy Me</button>
-        </div>
-      </really-clipboard-copy>
-    </section>
-
-    <!-- <section>
-      <h2>Required web platform APIs:</h2>
-
-      <p class="api-desc"><i>* Checked if API is natively supported</i></p>
-
-      <div>
-        <label>
-          <input class="input-checkbox__pointer-event" type="checkbox" disabled>
-          <span>PointerEvent</span>
-          <a
-            href="https://unpkg.com/pepjs@latest/"
-            target="_blank"
-            rel="noopener">PointerEvent polyfill</a>
-        </label>
-      </div>
-
-      <div>
-        <label>
-          <input class="input-checkbox__intl" type="checkbox" disabled>
-          <span>Intl.DateTimeFormat</span>
-          <a
-            href="https://unpkg.com/intl@1.2.4/"
-            target="_blank"
-            rel="noopener">Intl polyfill</a>
-        </label>
-      </div>
-
-      <div>
-        <label>
-          <input class="input-checkbox__web-animations" type="checkbox" disabled>
-          <span>Web Animations</span>
-          <a
-            href="https://unpkg.com/web-animations-js@latest/"
-            target="_blank"
-            rel="noopener">Web Animations polyfill</a>
-        </label>
-      </div>
-
-    </section>
-
-    <section>
       <h2>Code snippet generator</h2>
 
-      <div>
-        <i class="calendar-render-time"></i>
-        <really-clipboard-copy-configurator></really-clipboard-copy-configurator>
-      </div>
+      <code-configurator>
+        <really-clipboard-copy>
+          <div class="container">
+            <input
+              class="copyable"
+              id="really-clipboard-copy-id"
+              type="text"
+              value="You're awesome!" />
 
-    </section> -->
+            <button for="really-clipboard-copy-for" class="copy-btn">Copy Me</button>
+          </div>
+        </really-clipboard-copy>
+
+        <really-clipboard-copy>
+          <div class="container">
+            <textarea
+              class="copyable"
+              id="really-clipboard-copy-id"
+              placeholder="Type anything and copy the content"></textarea>
+
+            <button for="really-clipboard-copy-for" class="copy-btn">Copy content</button>
+          </div>
+        </really-clipboard-copy>
+
+        <really-clipboard-copy>
+          <div class="container">
+            <pre
+              style="background-color: #ffbcbc; padding: 16px; border-radius: 3px;"
+              id="really-clipboard-copy-id">
+              The roses are red and violet are blue.
+              Sugar is sweet and so are you. 🌹 ❤️
+
+                                          --- nobody
+            </pre>
+
+            <button for="really-clipboard-copy-for" class="copy-btn">Copy quote</button>
+          </div>
+        </really-clipboard-copy>
+      </code-configurator>
+    </section>
 
   </body>
 </html>

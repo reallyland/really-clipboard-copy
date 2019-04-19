@@ -13,8 +13,8 @@ import {
 
 const localName = 'really-clipboard-copy';
 
-function toCopyNode(node: HTMLElement | HTMLInputElement) {
-  if (node.tagName === 'INPUT') {
+function toCopyNode(node: HTMLElement | HTMLInputElement | HTMLTextAreaElement) {
+  if ('value' in node) {
     const preNode = document.createElement('pre');
 
     preNode.textContent = (node as HTMLInputElement).value;

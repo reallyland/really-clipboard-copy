@@ -1,0 +1,14 @@
+{
+  "properties": [
+    {
+      "name": "--really-clipboard-copy-color",
+      "value": "#0070fb",
+      "type": "string"
+    },
+    {
+      "name": "--really-clipboard-copy-background-color",
+      "value": "#fff",
+      "type": "string"
+    }
+  ]
+}
