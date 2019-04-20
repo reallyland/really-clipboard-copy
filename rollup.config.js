@@ -14,6 +14,7 @@ const bundle = {
   input: {
     'really-clipboard-copy': 'src/really-clipboard-copy.ts',
     'demo/code-configurator': 'src/demo/code-configurator.ts',
+    'demo/properties.config': 'src/demo/properties.config.ts',
   },
   output: {
     dir: 'dist',

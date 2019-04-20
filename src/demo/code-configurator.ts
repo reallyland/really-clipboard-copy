@@ -1,45 +1,28 @@
-// type PropertyValueType = typeof String | typeof Number | typeof Boolean;
-interface PropertyValueOptions {
+export interface PropertyValueOptions {
   label: string;
   value: string;
 }
-interface PropertyValue {
+export interface PropertyValue {
   name: string;
   value: unknown;
-  // type?: PropertyValueType;
   options?: PropertyValueOptions[];
   type?: string;
 }
 
 import '@material/mwc-button/mwc-button.js';
-import { css, customElement, html, LitElement } from 'lit-element';
+import { css, customElement, html, LitElement, property } from 'lit-element';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
-import Prism from 'prismjs';
+import 'prismjs';
 
 import { nothing } from 'lit-html/lib/part.js';
 import { contentCopy } from './demo-icons.js';
-import { prismVscode } from './prism-vscode.js';
+import { prismVscode } from './prism-styles.js';
 
 const localName  = 'code-configurator';
+const { highlight, languages } = window.Prism;
 
 function notArray(a?: unknown[]) {
   return !Array.isArray(a) || !a.length;
-}
-
-async function fetchConfig(configName: string) {
-  try {
-    const r = await fetch(configName);
-
-    if (!r.ok || r.status > 399) {
-      throw new Error(`Failed to fetch ${configName}`);
-    }
-
-    const d = await r.json();
-
-    return d;
-  } catch (e) {
-    return { properties: [] };
-  }
 }
 
 function toFunctionType(type?: string) {
@@ -78,7 +61,7 @@ function toCSSProperties(cssProperties: PropertyValue[]) {
 }
 
 function renderCode(code: string, grammar: string, language: string) {
-  return unsafeHTML(Prism.highlight(code, Prism.languages[grammar], language));
+  return unsafeHTML(highlight(code, languages[grammar], language));
 }
 
 @customElement(localName)
@@ -124,33 +107,20 @@ export class CodeConfigurator extends LitElement {
     prismVscode,
   ];
 
-  private _properties?: PropertyValue[];
-  private _cssProperties?: PropertyValue[];
-  private _slotted?: HTMLElement | null;
+  @property({ type: Array })
+  public properties?: PropertyValue[];
+
+  @property({ type: Array })
+  public cssProperties?: PropertyValue[];
+
+  @property({ type: String })
+  public customElement?: string;
+
   private _slottedElements?: HTMLElement[];
 
-  protected async firstUpdated() {
-    /**
-     * 1. Load properties.json
-     * 2. Load css-properties.json
-     */
-
-    const { url } = import.meta as { url: string };
-    const dirUrl = url.replace(/[/][^/]*$/, '');
-
-    const [properties, cssProperties] = await Promise.all([
-      fetchConfig(`${dirUrl}/properties.json`),
-      fetchConfig(`${dirUrl}/css-properties.json`),
-    ]);
-
-    this._properties = properties && properties.properties;
-    this._cssProperties = cssProperties && cssProperties.properties;
-    this.requestUpdate();
-  }
-
   protected updated() {
-    const properties = this._properties;
-    const cssProperties = this._cssProperties;
+    const properties = this.properties;
+    const cssProperties = this.cssProperties;
     const slottedElements = this._slottedElements;
 
     if (notArray(slottedElements)) return;
@@ -164,7 +134,7 @@ export class CodeConfigurator extends LitElement {
     }
 
     if (!notArray(cssProperties)) {
-      properties!.forEach((n) => {
+      cssProperties!.forEach((n) => {
         slottedElements!.forEach((o) => {
           o.style.setProperty(n.name, n.value as string);
         });
@@ -173,10 +143,11 @@ export class CodeConfigurator extends LitElement {
   }
 
   protected render() {
-    const properties = this._properties;
-    const cssProperties = this._cssProperties;
+    const properties = this.properties;
+    const cssProperties = this.cssProperties;
 
     console.log(
+      'render',
       properties,
       cssProperties
     );
@@ -192,24 +163,35 @@ export class CodeConfigurator extends LitElement {
 
   private _updateSlotted(ev: Event) {
     const slotted = ev.currentTarget as HTMLSlotElement;
+    const customElementName = this.customElement;
+
+    if (typeof customElementName !== 'string' || !customElementName.length) {
+      throw new Error(`Property 'customElement' is not defined`);
+    }
 
     const assignedNodes = Array.from(slotted.assignedNodes()).filter(
       n => n.nodeType === Node.ELEMENT_NODE) as HTMLElement[];
-    const noNodes = notArray(assignedNodes);
+    const matchedCustomElements = assignedNodes.reduce((p, n) => {
+      if (n.localName === customElementName) {
+        p.push(n);
+      } else if (n && n.querySelectorAll) {
+        const allCustomElements = Array.from<HTMLElement>(n.querySelectorAll(customElementName));
+        p.push(...allCustomElements);
+      }
 
-    this._slotted = noNodes ? null : assignedNodes[0];
-    this._slottedElements = noNodes ? [] : assignedNodes;
+      return p;
+    }, [] as HTMLElement[]);
+
+    const noNodes = notArray(matchedCustomElements);
+
+    this._slottedElements = noNodes ? [] : matchedCustomElements;
     this.requestUpdate();
   }
 
   private _renderProperties(properties?: PropertyValue[], cssProperties?: PropertyValue[]) {
-    const slotted = this._slotted;
+    const elName = this.customElement;
     const noProperties = notArray(properties);
     const noCssProperties = notArray(cssProperties);
-
-    if (slotted == null) return;
-
-    const elName = slotted.localName;
 
     // tslint:disable: max-line-length
     return html`
@@ -223,7 +205,8 @@ export class CodeConfigurator extends LitElement {
 
     ${noCssProperties ? nothing : html`<div>
       <h2>CSS Properties</h2>
-      <div class="configurator-container">${this._renderPropertiesConfigurator(cssProperties, true)}</div>
+      <div class="configurator-container">${
+        this._renderPropertiesConfigurator(cssProperties, true)}</div>
     </div>`}
     </div>
 
@@ -240,7 +223,8 @@ export class CodeConfigurator extends LitElement {
         <span class="copy-text">Copy</span>
       </mwc-button>
       <pre class="language-html" id="propertiesFor">${
-        renderCode(`<${elName}${toPropertiesAttr(properties!)}><${elName}>`, 'html', 'html')}</pre>
+        renderCode(`<${elName}${
+          toPropertiesAttr(properties!)}><${elName}>`, 'html', 'html')}</pre>
     </div>
     `}
 
@@ -280,7 +264,8 @@ export class CodeConfigurator extends LitElement {
 
       return html`<div class="configurator">
         <label>
-          <div style="display: inline-block; width: calc(${longestNameLen}ch + 8px);">${name}</div>
+          <div style="display: inline-block; width: calc(${
+            longestNameLen}ch + 8px);">${name}</div>
           ${element}
         </label>
       </div>`;
@@ -292,8 +277,10 @@ export class CodeConfigurator extends LitElement {
   private _updateProps(ev: Event, isCSS: boolean) {
     const currentTarget = ev.currentTarget as HTMLInputElement | HTMLSelectElement;
     const propertyName = currentTarget.getAttribute('data-propertyname');
-    const properties = isCSS ? this._cssProperties : this._properties;
-    const val = currentTarget.value;
+    const properties = isCSS ? this.cssProperties : this.properties;
+    const val = currentTarget.tagName === 'INPUT' && currentTarget.type === 'checkbox' ?
+      (currentTarget as HTMLInputElement).checked :
+      currentTarget.value;
 
     if (notArray(properties)) return;
 
@@ -305,8 +292,7 @@ export class CodeConfigurator extends LitElement {
       return n;
     });
 
-    const propName: '_properties' | '_cssProperties' =
-      `_${isCSS ? 'cssP' : 'p'}roperties` as '_properties' | '_cssProperties';
+    const propName = `${isCSS ? 'cssP' : 'p'}roperties` as 'properties' | 'cssProperties';
 
     this[propName] = updatedProperties;
     this.requestUpdate(propName);
@@ -330,4 +316,10 @@ export class CodeConfigurator extends LitElement {
     this.dispatchEvent(new CustomEvent('content-copied'));
   }
 
+}
+
+declare global {
+  interface Window {
+    Prism: typeof import('prismjs');
+  }
 }

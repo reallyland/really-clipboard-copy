@@ -25,12 +25,14 @@
     <script type="module">
       import '/dist/really-clipboard-copy.js';
       import '/dist/demo/code-configurator.js';
+      import { properties } from '/dist/demo/properties.config.js';
 
       const $ = s => document.body.querySelector(s);
 
       const copyElement = $('really-clipboard-copy');
       const copyableInput = $('.copyable');
       const copyButton = $('.copy-btn');
+      const configuratorEl = $('.configurator');
 
       if (copyElement) {
         copyElement.addEventListener('content-copied', () => {
@@ -42,6 +44,10 @@
         copyButton.addEventListener('click', () => {
           console.log('Copy');
         });
+      }
+
+      if (configuratorEl) {
+        configuratorEl.properties = properties;
       }
     </script>
   </head>
@@ -118,8 +124,8 @@
     <section>
       <h2>Code snippet generator</h2>
 
-      <code-configurator>
-        <really-clipboard-copy>
+      <code-configurator class="configurator" customelement="really-clipboard-copy">
+        <!-- <really-clipboard-copy>
           <div class="container">
             <input
               class="copyable"
@@ -155,7 +161,7 @@
 
             <button for="really-clipboard-copy-for" class="copy-btn">Copy quote</button>
           </div>
-        </really-clipboard-copy>
+        </really-clipboard-copy> -->
       </code-configurator>
     </section>
 
