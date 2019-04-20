@@ -29,7 +29,8 @@
   "module": "./dist/my-element.js",
   "typings": "./dist/my-element.d.ts",
   "scripts": {
-    "build": "tsc -p tsconfig.test.json",
+    "build:test": "npm run clean && tsc -p tsconfig.test.json",
+    "build": "npm run clean && npm run rollup",
     "clean": "rm -rf dist/",
     "lint": "tslint --project tsconfig.json --config tslint.prod.json --format stylish",
     "lint:debug": "tslint --project tsconfig.json --config tslint.json --format stylish",
@@ -49,7 +50,6 @@
     "@types/chai": "^4.1.7",
     "@types/mocha": "^5.2.6",
     "@types/prismjs": "^1.16.0",
-    "@webcomponents/webcomponentsjs": "^2.2.7",
     "chai": "^4.2.0",
     "mocha": "^5.2.0",
     "rollup": "^1.9.0",
@@ -66,7 +66,7 @@
     "wct-mocha": "^1.0.0"
   },
   "engines": {
-    "node": ">= 10.15.1",
+    "node": ">= 8.16.0",
     "npm": ">= 6.4.1"
   },
   "publishConfig": {

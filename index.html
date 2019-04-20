@@ -9,22 +9,18 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://unpkg.com" crossorigin>
 
-    <!-- <script type="module" src="/node_modules/@polymer/iron-component-page/iron-component-page.js"></script> -->
-    <script src="/node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
-    <script src="https://unpkg.com/dimport@1.0.0/dist/index.min.js"></script>
+    <script src="https://unpkg.com/dimport@latest/dist/index.min.js"></script>
+    <script src="https://unpkg.com/@webcomponents/webcomponentsjs@latest/webcomponents-loader.js"></script>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Google+Sans:400,500,700">
 
-    <!-- <script>
+    <script>
       if (!window.fetch) {
-        const wa = document.createElement('script');
-        /** FIXME: Pin package version due to https://github.com/andyearnshaw/Intl.js/issues/256 */
-        wa.src = 'https://unpkg.com/whatwg-fetch@3.0.0/dist/fetch.umd.js';
-        wa.onload = () => console.info('🌐 Fetch polyfill loaded');
-        wa.onerror = console.error;
-        document.head.appendChild(wa);
+        const s = document.createElement('script');
+        s.src = 'https://unpkg.com/whatwg-fetch@3.0.0/dist/fetch.umd.js';
+        document.head.appendChild(s);
       }
-    </script> -->
+    </script>
 
     <script type="module">
       import '/dist/really-clipboard-copy.js';

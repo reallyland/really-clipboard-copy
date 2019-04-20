@@ -1,6 +1,10 @@
 import { css } from 'lit-element';
 
-export const prismXonokai = css`
+export const prismVscode = css`
+.token.property {
+  color: #9cdcfe;
+}
+
 code[class*="language-"],
 pre[class*="language-"] {
   -moz-tab-size: 2;
@@ -13,14 +17,17 @@ pre[class*="language-"] {
   white-space: pre;
   white-space: pre-wrap;
   word-wrap: normal;
-  font-family: Menlo, Monaco, "Courier New", monospace;
+  /* font-family: Menlo, Monaco, "Courier New", monospace; */
+  font-family: Consolas, Inconsolata ,"Courier New", monospace;
   font-size: 14px;
-  color: #76d9e6;
+  /* color: #76d9e6; */
+  color: #569cd6;
   text-shadow: none;
 }
 pre[class*="language-"],
 :not(pre)>code[class*="language-"] {
-  background: #2a2a2a;
+  /* background: #2a2a2a; */
+  background: #1e1e1e;
 }
 pre[class*="language-"] {
   padding: 15px;
@@ -59,7 +66,8 @@ pre[class*="language-"] code {
 }
 .token.attr-name,
 .token.string {
-  color: #e6d06c;
+  /* color: #e6d06c; */
+  color: #9cdcfe;
 }
 .token.entity,
 .token.url,
@@ -69,14 +77,16 @@ pre[class*="language-"] code {
 }
 .token.selector,
 .token.inserted {
-  color: #a6e22d;
+  /* color: #a6e22d; */
+  color: #d7ba7d;
 }
 .token.atrule,
 .token.attr-value,
 .token.keyword,
 .token.important,
 .token.deleted {
-  color: #ef3b7d;
+  /* color: #ef3b7d; */
+  color: #ce9178
 }
 .token.regex,
 .token.statement {
@@ -92,7 +102,8 @@ pre[class*="language-"] code {
   font-weight: bold;
 }
 .token.punctuation {
-  color: #bebec5;
+  /* color: #bebec5; */
+  color: #808080;
 }
 .token.entity {
   cursor: help;

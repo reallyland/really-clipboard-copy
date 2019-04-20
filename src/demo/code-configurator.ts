@@ -18,7 +18,7 @@ import Prism from 'prismjs';
 
 import { nothing } from 'lit-html/lib/part.js';
 import { contentCopy } from './demo-icons.js';
-import { prismXonokai } from './prism-xonokai.js';
+import { prismVscode } from './prism-vscode.js';
 
 const localName  = 'code-configurator';
 
@@ -121,7 +121,7 @@ export class CodeConfigurator extends LitElement {
       margin: 0 0 0 8px;
     }
     `,
-    prismXonokai,
+    prismVscode,
   ];
 
   private _properties?: PropertyValue[];
