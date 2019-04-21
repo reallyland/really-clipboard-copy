@@ -4,13 +4,13 @@
   "plugins": {
     "local": {
       "browsers": [
-        "chrome"
+        "chrome",
+        "firefox"
       ],
       "browserOptions": {
         "chrome": [
-          "disable-gpu",
           "headless",
-          "window-size=1920,1080"
+          "disable-gpu"
         ],
         "firefox": [
           "-headless"
@@ -18,6 +18,8 @@
       }
     }
   },
-  "suites": [ "src/test" ],
-  "verbose": true
+  "suites": ["src/test"],
+  "verbose": false,
+  "expanded": true,
+  "compile": "auto"
 }

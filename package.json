@@ -1,13 +1,18 @@
 {
   "name": "really-clipboard-copy",
   "version": "0.0.0",
-  "private": true,
-  "description": "Really custom element to copy content to clipboard",
+  "description": "Copy content to clipboard",
   "keywords": [
-    "really-clipboard-copy",
+    "clipboard",
+    "clipboard-copy",
+    "copy",
+    "copy-paste",
     "lit-element",
     "lit-html",
     "polymer",
+    "really",
+    "really-clipboard-copy",
+    "reallyland",
     "typescript",
     "web-components"
   ],
@@ -25,42 +30,31 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/my-element.js",
-  "module": "./dist/my-element.js",
-  "typings": "./dist/my-element.d.ts",
+  "main": "./dist/really-clipboard-copy.js",
+  "module": "./dist/really-clipboard-copy.js",
+  "typings": "./dist/really-clipboard-copy.d.ts",
   "scripts": {
-    "build:test": "npm run clean && tsc -p tsconfig.test.json",
-    "build": "npm run clean && npm run rollup",
+    "build": "npm run ts -- -p tsconfig.prod.json",
     "clean": "rm -rf dist/",
     "lint": "tslint --project tsconfig.json --config tslint.prod.json --format stylish",
     "lint:debug": "tslint --project tsconfig.json --config tslint.json --format stylish",
-    "prepublishOnly": "rm -rf dist/ && rollup -c ./rollup.config.js",
-    "rollup": "rollup -c ./rollup.config.js",
-    "test": "npm run lint && npm run build && wct",
-    "watch": "npm run clean && npm run rollup -- --watch"
+    "prepublishOnly": "rm -rf dist/ && npm run build",
+    "test": "npm run lint && npm run ts && wct --skip-selenium-install --config-file wct.config.json",
+    "test:ci": "wct --config-file wct.config.ci.json",
+    "test:sl": "wct --config-file wct.config.sl.json",
+    "ts": "tsc",
+    "watch": "npm run ts -- --watch"
   },
   "dependencies": {
-    "@material/mwc-button": "^0.5.0",
     "lit-element": "^2.1.0",
-    "lit-html": "^1.0.0",
-    "prismjs": "^1.16.0"
+    "lit-html": "^1.0.0"
   },
   "devDependencies": {
     "@messageflow/tslint-config": "^1.3.0",
     "@types/chai": "^4.1.7",
     "@types/mocha": "^5.2.6",
-    "@types/prismjs": "^1.16.0",
     "chai": "^4.2.0",
     "mocha": "^5.2.0",
-    "rollup": "^1.9.0",
-    "rollup-plugin-commonjs": "^9.3.4",
-    "rollup-plugin-cpy": "^1.1.0",
-    "rollup-plugin-filesize": "^6.0.1",
-    "rollup-plugin-minify-html-literals": "^1.2.2",
-    "rollup-plugin-node-resolve": "^4.2.0",
-    "rollup-plugin-terser": "^4.0.4",
-    "rollup-plugin-tslint": "^0.2.2",
-    "rollup-plugin-typescript2": "^0.20.1",
     "tslint": "^5.15.0",
     "typescript": "^3.4.2",
     "wct-mocha": "^1.0.0"

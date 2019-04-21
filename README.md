@@ -1,7 +1,7 @@
 <div align="center" style="text-align: center;">
   <h1 style="border-bottom: none;">really-clipboard-copy</h1>
 
-  <p>Really custom element to copy content to clipboard</p>
+  <p>Copy content to clipboard</p>
 </div>
 
 <hr />
@@ -33,8 +33,6 @@
 - [Pre-requisites](#pre-requisites)
 - [Installation](#installation)
 - [Usage](#usage)
-  - [HTML (with native ES modules)](#html-with-native-es-modules)
-  - [JS/ TS file (w/ native ES modules)](#js-ts-file-w-native-es-modules)
 - [License](#license)
 
 ## Pre-requisites
@@ -53,51 +51,6 @@ $ npm install really-clipboard-copy
 ```
 
 ## Usage
-
-### HTML (with native ES modules)
-
-```html
-<!-- For the sake of brevity, the HTML below is just for reference -->
-<!doctype html>
-<html>
-  <head>
-    <!-- Native ES modules -->
-    <script type="module" src="/path/to/my-element.js"></script>
-  </head>
-
-  <body>
-    <!-- Element declaration -->
-    <my-element></my-element>
-  </body>
-</html>
-```
-
-### JS/ TS file (w/ native ES modules)
-
-```ts
-import { css, html, LitElement } from 'lit-element';
-import 'really-clipboard-copy.js';
-
-class MainApp extends LitElement {
-  public static styles = [
-    css`
-    :host {
-      display: block;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-    `,
-  ];
-
-  protected render() {
-    return html`
-    <my-element></my-element>
-    `;
-  }
-}
-```
 
 ## License
 

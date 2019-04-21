@@ -52,6 +52,10 @@ export class ReallyClipboardCopy extends LitElement {
 
   private _idElement?: HTMLElement;
 
+  private get _slot() {
+    return this.shadowRoot!.querySelector('slot') as HTMLSlotElement;
+  }
+
   protected render() {
     return html`<slot @slotchange="${this._assignSlotted}"></slot>`;
   }
@@ -68,11 +72,17 @@ export class ReallyClipboardCopy extends LitElement {
         if (n.nodeType === Node.ELEMENT_NODE) {
           if (p.for && p.id) return p;
 
-          const forElement = n.querySelector(forAttr) as HTMLElement | null;
-          const idElement = n.querySelector(idAttr) as HTMLElement | null;
+          if (n.hasAttribute(forAttr)) {
+            p.for = n;
+          } else if (n.hasAttribute(idAttr)) {
+            p.id = n;
+          } else {
+            const forElement = n.querySelector(forAttr) as HTMLElement | null;
+            const idElement = n.querySelector(idAttr) as HTMLElement | null;
 
-          if (forElement && p.for == null) { p.for = forElement; }
-          if (idElement && p.id == null) { p.id = idElement; }
+            if (forElement && p.for == null) { p.for = forElement; }
+            if (idElement && p.id == null) { p.id = idElement; }
+          }
         }
 
         return p;
@@ -105,12 +115,12 @@ export class ReallyClipboardCopy extends LitElement {
 
     if (nodeObj.temporary) document.body.removeChild(copyNode);
 
-    this.dispatchEvent(new CustomEvent('content-copied'));
+    this.dispatchEvent(new CustomEvent('content-copied', {
+      bubbles: true,
+      composed: true,
+    }));
   }
 
-  get _slot() {
-    return this.shadowRoot!.querySelector('slot') as HTMLSlotElement;
-  }
 }
 
 declare global {
