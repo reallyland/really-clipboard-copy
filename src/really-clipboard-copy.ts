@@ -110,6 +110,15 @@ export class ReallyClipboardCopy extends LitElement {
     range.selectNodeContents(copyNode);
     selection.addRange(range);
 
+    /**
+     * NOTE(motss): Even though `document.execCommand` has been documented to have widely supported
+     * for ages but there is actually a catch when comes to actual support in older browsers.
+     *
+     * In the early days, `document.execCommand` only supports a partial list of commands defined in
+     * the specs and `copy` is unfortunately one of them.
+     *
+     * For in-depth implementation details of the `copy` command, visit https://bit.ly/2XxcXDF.
+     */
     document.execCommand('copy');
     selection.removeAllRanges();
 
