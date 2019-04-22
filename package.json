@@ -1,6 +1,6 @@
 {
   "name": "@reallyland/really-clipboard-copy",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Copy content to clipboard",
   "keywords": [
     "clipboard",
