@@ -28,7 +28,10 @@
     "url": "https://github.com/motss"
   },
   "files": [
-    "dist"
+    "dist/*.d.ts.map",
+    "dist/*.d.ts",
+    "dist/*.js.map",
+    "dist/*.js"
   ],
   "main": "./dist/really-clipboard-copy.js",
   "module": "./dist/really-clipboard-copy.js",
