@@ -14,7 +14,8 @@
         "firefox": [
           "-headless"
         ]
-      }
+      },
+      "skipSeleniumInstall": true
     }
   },
   "suites": ["src/test"],

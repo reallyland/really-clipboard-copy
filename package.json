@@ -39,7 +39,7 @@
     "lint": "tslint --project tsconfig.json --config tslint.prod.json --format stylish",
     "lint:debug": "tslint --project tsconfig.json --config tslint.json --format stylish",
     "prepublishOnly": "rm -rf dist/ && npm run build",
-    "test": "npm run lint && npm run ts && wct --skip-selenium-install --config-file wct.config.json",
+    "test": "npm run lint && npm run ts && wct --config-file wct.config.json",
     "test:ci": "wct --config-file wct.config.ci.json",
     "test:sl": "wct --config-file wct.config.sl.json",
     "ts": "tsc",
