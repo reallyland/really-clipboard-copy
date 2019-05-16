@@ -24,30 +24,6 @@
 
     <script type="module">
       import '/dist/really-clipboard-copy.js';
-      // import { properties } from '/dist/demo/properties.config.js';
-
-      const $ = s => document.body.querySelector(s);
-
-      // const copyElement = $('really-clipboard-copy');
-      // const copyableInput = $('.copyable');
-      // const copyButton = $('.copy-btn');
-      // const configuratorEl = $('.configurator');
-
-      // if (copyElement) {
-      //   copyElement.addEventListener('content-copied', () => {
-      //     console.log('Copied to clipboard!');
-      //   });
-      // }
-
-      // if (copyButton) {
-      //   copyButton.addEventListener('click', () => {
-      //     console.log('Copy');
-      //   });
-      // }
-
-      // if (configuratorEl) {
-      //   configuratorEl.properties = properties;
-      // }
     </script>
   </head>
 
@@ -112,8 +88,6 @@
         }
       }
 
-      /* .copy-btn {} */
-
     </style>
 
     <header>
@@ -127,11 +101,11 @@
         <div class="container">
           <input
             class="copyable"
-            id="really-clipboard-copy-id"
+            clipboard-copy-id="copiable"
             type="text"
             value="You're awesome!" />
 
-          <button for="really-clipboard-copy-for" class="copy-btn">Copy Me</button>
+          <button clipboard-copy-for="copiable" class="copy-btn">Copy Me</button>
         </div>
       </really-clipboard-copy>
 
@@ -139,10 +113,10 @@
         <div class="container">
           <textarea
             class="copyable"
-            id="really-clipboard-copy-id"
+            clipboard-copy-id="copiable"
             placeholder="Type anything and copy the content"></textarea>
 
-          <button for="really-clipboard-copy-for" class="copy-btn">Copy content</button>
+          <button clipboard-copy-for="copiable" class="copy-btn">Copy content</button>
         </div>
       </really-clipboard-copy>
 
@@ -150,14 +124,14 @@
         <div class="container">
           <pre
             style="background-color: #ffbcbc; padding: 16px; border-radius: 3px;"
-            id="really-clipboard-copy-id">
+            clipboard-copy-id="copiable">
             The roses are red and violet are blue.
             Sugar is sweet and so are you. 🌹 ❤️
 
                                         --- nobody
           </pre>
 
-          <button for="really-clipboard-copy-for" class="copy-btn">Copy quote</button>
+          <button clipboard-copy-for="copiable" class="copy-btn">Copy quote</button>
         </div>
       </really-clipboard-copy>
     </section>

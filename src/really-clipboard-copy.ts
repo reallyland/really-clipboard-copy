@@ -45,10 +45,10 @@ export class ReallyClipboardCopy extends LitElement {
   ];
 
   @property({ type: String })
-  public forSlot: string = `${localName}-for`;
+  public forSlot: string = 'clipboard-copy-for';
 
   @property({ type: String })
-  public idSlot: string = `${localName}-id`;
+  public idSlot: string = 'clipboard-copy-id';
 
   private _idElement?: HTMLElement;
 
@@ -64,8 +64,8 @@ export class ReallyClipboardCopy extends LitElement {
     const slot = this._slot;
 
     if (slot) {
-      const forAttr = `[for=${this.forSlot}]`;
-      const idAttr = `[id=${this.idSlot}]`;
+      const forAttr = `[${this.forSlot}]`;
+      const idAttr = `[${this.idSlot}]`;
       const nodes = slot.assignedNodes() as HTMLElement[];
 
       const slotted = nodes.reduce((p, n) => {
