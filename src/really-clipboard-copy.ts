@@ -13,21 +13,24 @@ import {
 
 const localName = 'really-clipboard-copy';
 
-function toCopyNode(node: HTMLElement | HTMLInputElement | HTMLTextAreaElement) {
-  if ('value' in node) {
-    const preNode = document.createElement('pre');
+function toCopyNode(
+  node: HTMLElement,
+  contentValue: string,
+  noTextNode: boolean = false
+) {
+  let preNode = node;
 
-    preNode.textContent = (node as HTMLInputElement).value;
+  if (noTextNode) {
+    preNode = document.createElement('pre');
+    preNode.textContent = contentValue;
     preNode.style.position = 'absolute';
     preNode.style.top = preNode.style.left = '200vh';
     preNode.style.opacity = '0';
 
     document.body.appendChild(preNode);
-
-    return { node: preNode, temporary: true };
   }
 
-  return { node, temporary: false };
+  return { node: preNode, temporary: noTextNode };
 }
 
 @customElement(localName)
@@ -95,39 +98,61 @@ export class ReallyClipboardCopy extends LitElement {
     }
   }
 
-  private _copyText() {
-    const idElement = this._idElement;
+  private async _copyText() {
+    try {
+      const idElement = this._idElement;
 
-    if (idElement == null) return;
+      if (idElement == null) return;
 
-    const nodeObj = toCopyNode(idElement);
-    const copyNode = nodeObj.node;
+      const isInputElement = idElement instanceof HTMLInputElement;
+      const isTextareaElement = idElement instanceof HTMLTextAreaElement;
+      const isAnchorElement = idElement instanceof HTMLAnchorElement;
+      const contentValue = (isInputElement || isTextareaElement ?
+        (idElement as HTMLInputElement).value :
+        (isAnchorElement ? (idElement as HTMLAnchorElement).href : idElement.textContent)) || '';
 
-    const selection = getSelection()!;
-    const range = document.createRange();
+      if ('clipboard' in navigator) return await navigator.clipboard.writeText(contentValue);
 
-    selection.removeAllRanges();
-    range.selectNodeContents(copyNode);
-    selection.addRange(range);
+      const nodeObj = toCopyNode(
+        idElement,
+        contentValue,
+        isInputElement || isTextareaElement || isAnchorElement);
+      const copyNode = nodeObj.node;
 
-    /**
-     * NOTE(motss): Even though `document.execCommand` has been documented to have widely supported
-     * for ages but there is actually a catch when comes to actual support in older browsers.
-     *
-     * In the early days, `document.execCommand` only supports a partial list of commands defined in
-     * the specs and `copy` is unfortunately one of them.
-     *
-     * For in-depth implementation details of the `copy` command, visit https://bit.ly/2XxcXDF.
-     */
-    document.execCommand('copy');
-    selection.removeAllRanges();
+      const selection = getSelection()!;
+      const range = document.createRange();
 
-    if (nodeObj.temporary) document.body.removeChild(copyNode);
+      selection.removeAllRanges();
+      range.selectNodeContents(copyNode);
+      selection.addRange(range);
 
-    this.dispatchEvent(new CustomEvent('content-copied', {
-      bubbles: true,
-      composed: true,
-    }));
+      /**
+       * NOTE(motss): Even though `document.execCommand` has been documented to have widely
+       * supported for ages but there is actually a catch when comes to actual support in
+       * older browsers.
+       *
+       * In the early days, `document.execCommand` only supports a partial list of commands
+       * defined in the specs and `copy` is unfortunately one of them.
+       *
+       * For in-depth implementation details of the `copy` command, visit https://bit.ly/2XxcXDF.
+       */
+      const copyStatus = document.execCommand('copy');
+      selection.removeAllRanges();
+
+      if (nodeObj.temporary) document.body.removeChild(copyNode);
+      if (!copyStatus) throw new Error('Failed to copy');
+
+      this.dispatchEvent(new CustomEvent('content-copied', {
+        bubbles: true,
+        composed: true,
+      }));
+    } catch (e) {
+      this.dispatchEvent(new CustomEvent('content-copy-failed', {
+        detail: e,
+        bubbles: true,
+        composed: true,
+      }));
+    }
   }
 
 }
