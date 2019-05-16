@@ -32,8 +32,8 @@ describe(localName, () => {
       strictEqual(el.getAttribute('forslot'), null, `'forslot' not set`);
       strictEqual(el.getAttribute('idslot'), null, `'idslot' not set`);
 
-      strictEqual(el.forSlot, `${localName}-for`, `'forSlot' not matched`);
-      strictEqual(el.idSlot, `${localName}-id`, `'idSlot' not matched`);
+      strictEqual(el.forSlot, `clipboard-copy-for`, `'forSlot' not matched`);
+      strictEqual(el.idSlot, `clipboard-copy-id`, `'idSlot' not matched`);
 
       strictEqual(el.innerHTML, '', `Expected no nodes in light DOM`);
       strictEqual(
