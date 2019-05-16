@@ -142,12 +142,12 @@ export class ReallyClipboardCopy extends LitElement {
       if (nodeObj.temporary) document.body.removeChild(copyNode);
       if (!copyStatus) throw new Error('Failed to copy');
 
-      this.dispatchEvent(new CustomEvent('content-copied', {
+      this.dispatchEvent(new CustomEvent('copy-success', {
         bubbles: true,
         composed: true,
       }));
     } catch (e) {
-      this.dispatchEvent(new CustomEvent('content-copy-failed', {
+      this.dispatchEvent(new CustomEvent('copy-error', {
         detail: e,
         bubbles: true,
         composed: true,
