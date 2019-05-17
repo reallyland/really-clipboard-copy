@@ -1,5 +1,21 @@
 # API References
 
+## CopySuccess
+
+```ts
+interface CopySuccess {
+  value: string;
+}
+```
+
+## CopyError 
+
+```ts
+interface CopyError {
+  reason: Error;
+}
+```
+
 ## ReallyClipboardCopy
 
 ### Propeties
@@ -8,7 +24,7 @@
 | --- | --- | --- | --- |
 | `forSlot` | [string] | `copy-for` | The content of an element that has the `copy-for` attribute set will the copied to the clipboard. |
 | `idSlot` | [string]| `copy-id` | The element that has the `copy-id` attribute set will trigger the copy function to copy the content of an element that has the `copy-for` attribute set. This usually is a clickable element such as the `<button>` element. |
-| `sync` | [string] | `false` | If true, `document.execCommand('copy')` will be used instead of the native [Async Clipboard API] if supported.
+| `sync` | [boolean] | `false` | If true, `document.execCommand('copy')` will be used instead of the native [Async Clipboard API] if supported.
 
 ### Methods
 
@@ -16,10 +32,10 @@ _None_
 
 ### Events
 
-| Event | Description |
-| --- | --- |
-| `copy-success` | Fires when the content of the element that has the `copy-for` attribute set is copied to the clipboard. |
-| `copy-error` | Fires when content fails to be copied to the clipboard. |
+| Event | `detail` Type | Description |
+| --- | --- | --- |
+| `copy-success` | [CopySuccess] | Fires when the content of the element that has the `copy-for` attribute set is copied to the clipboard. |
+| `copy-error` | [CopyError] | Fires when content fails to be copied to the clipboard. |
 
 ### CSS Custom Properties
 
@@ -39,3 +55,5 @@ _None_
 
 <!-- References -->
 [Async Clipboard API]: https://developer.mozilla.org/en-US/docs/Web/API/Clipboard_API
+[CopySuccess]: #copysuccess
+[CopyError]: #copyerror

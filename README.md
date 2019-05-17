@@ -62,14 +62,42 @@ $ npm install @reallyland/really-clipboard-copy
 <html>
   <head>
     <script type="module">
-      import '/path/to/@reallyland/really-clipboard-copy.js';
+      import 'https://unpkg.com/@reallyland/really-clipboard-copy@latest/dist/really-clipboard-copy.js?module';
+
+      const asyncCopyEl = document.body.querySelector('.async-copy');
+      const syncCopyEl = document.body.querySelector('.sync-copy');
+
+      asyncCopyEl.addEventListener('copy-success', (ev) => {
+        const { value } = ev.detail || {};
+        console.log(`Copied value is ${value}`);
+      });
+      asyncCopyEl.addEventListener('copy-error', (ev) => {
+        const { reason } = ev.detail || {};
+        console.error(reason);
+      });
+
+      syncCopyEl.addEventListener('copy-success', (ev) => {
+        const { value } = ev.detail || {};
+        console.log(`Copied value is ${value}`);
+      });
+      syncCopyEl.addEventListener('copy-error', (ev) => {
+        const { reason } = ev.detail || {};
+        console.error(reason);
+      });
     </script>
   </head>
 
   <body>
-    <really-clipboard-copy>
-      <input id="copy-id" type="text" readonly value="Hello, World!" />
-      <button id="copy-for">Copy</button>
+    <h2>Copy input text using Async Clipboard API if supported</h2>
+    <really-clipboard-copy class="async-copy">
+      <input copy-id="copiable" type="text" readonly value="Hello, World!" />
+      <button copy-for="copiable">Copy</button>
+    </really-clipboard-copy>
+
+    <h2>Copy input text only using document.execCommand('copy')</h2>
+    <really-clipboard-copy class="sync-copy" sync>
+      <input copy-id="copiable" type="text" readonly value="Hello, World!" />
+      <button copy-for="copiable">Copy</button>
     </really-clipboard-copy>
   </body>
 </html>
