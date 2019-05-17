@@ -48,10 +48,10 @@ export class ReallyClipboardCopy extends LitElement {
   ];
 
   @property({ type: String })
-  public forSlot: string = 'clipboard-copy-for';
+  public forSlot: string = 'copy-for';
 
   @property({ type: String })
-  public idSlot: string = 'clipboard-copy-id';
+  public idSlot: string = 'copy-id';
 
   private _idElement?: HTMLElement;
 

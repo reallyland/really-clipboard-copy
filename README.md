@@ -68,8 +68,8 @@ $ npm install @reallyland/really-clipboard-copy
 
   <body>
     <really-clipboard-copy>
-      <input id="really-clipboard-copy-id" type="text" readonly value="Hello, World!" />
-      <button id="really-clipboard-copy-for">Copy</button>
+      <input id="copy-id" type="text" readonly value="Hello, World!" />
+      <button id="copy-for">Copy</button>
     </really-clipboard-copy>
   </body>
 </html>

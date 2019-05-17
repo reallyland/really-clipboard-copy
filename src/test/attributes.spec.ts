@@ -32,8 +32,8 @@ describe(localName, () => {
       strictEqual(el.getAttribute('forslot'), null, `'forslot' not set`);
       strictEqual(el.getAttribute('idslot'), null, `'idslot' not set`);
 
-      strictEqual(el.forSlot, `clipboard-copy-for`, `'forSlot' not matched`);
-      strictEqual(el.idSlot, `clipboard-copy-id`, `'idSlot' not matched`);
+      strictEqual(el.forSlot, `copy-for`, `'forSlot' not matched`);
+      strictEqual(el.idSlot, `copy-id`, `'idSlot' not matched`);
 
       strictEqual(el.innerHTML, '', `Expected no nodes in light DOM`);
       strictEqual(
@@ -43,15 +43,15 @@ describe(localName, () => {
     });
 
     it(`renders with defined attributes`, async () => {
-      el.setAttribute('idslot', 'copy-id');
-      el.setAttribute('forslot', 'copy-for');
+      el.setAttribute('idslot', 'id');
+      el.setAttribute('forslot', 'for');
       await el.updateComplete;
 
-      strictEqual(el.getAttribute('forslot'), 'copy-for', `'forslot' not set`);
-      strictEqual(el.getAttribute('idslot'), 'copy-id', `'idslot' not set`);
+      strictEqual(el.getAttribute('forslot'), 'for', `'forslot' not set`);
+      strictEqual(el.getAttribute('idslot'), 'id', `'idslot' not set`);
 
-      strictEqual(el.forSlot, 'copy-for', `'forSlot' not updated`);
-      strictEqual(el.idSlot, 'copy-id', `'idSlot' not updated`);
+      strictEqual(el.forSlot, 'for', `'forSlot' not updated`);
+      strictEqual(el.idSlot, 'id', `'idSlot' not updated`);
 
       strictEqual(el.innerHTML, '', `Expected no nodes in light DOM`);
       strictEqual(

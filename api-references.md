@@ -6,8 +6,8 @@
 
 | Property | Type | Default | Description |
 | --- | --- | --- | --- |
-| `forSlot` | [string] | `clipboard-copy-for` | The content of an element that has the `clipboard-copy-for` attribute set will the copied to the clipboard. |
-| `idSlot` | [string]| `clipboard-copy-id` | The element that has the `clipboard-copy-id` attribute set will trigger the copy function to copy the content of an element that has the `clipboard-copy-for` attribute set. This usually is a clickable element such as the `<button>` element. |
+| `forSlot` | [string] | `copy-for` | The content of an element that has the `copy-for` attribute set will the copied to the clipboard. |
+| `idSlot` | [string]| `copy-id` | The element that has the `copy-id` attribute set will trigger the copy function to copy the content of an element that has the `copy-for` attribute set. This usually is a clickable element such as the `<button>` element. |
 
 ### Methods
 
@@ -17,7 +17,7 @@ _None_
 
 | Event | Description |
 | --- | --- |
-| `copy-success` | Fires when the content of the element that has the `clipboard-copy-for` attribute set is copied to the clipboard. |
+| `copy-success` | Fires when the content of the element that has the `copy-for` attribute set is copied to the clipboard. |
 | `copy-error` | Fires when content fails to be copied to the clipboard. |
 
 ### CSS Custom Properties

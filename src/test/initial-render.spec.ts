@@ -38,10 +38,10 @@ describe(localName, () => {
       const buttonEl = document.createElement('button');
 
       divEl.textContent = 'Hello, World!';
-      divEl.setAttribute('clipboard-copy-id', 'copiable');
+      divEl.setAttribute('copy-id', 'copiable');
 
       buttonEl.textContent = 'Copy';
-      buttonEl.setAttribute('clipboard-copy-for', 'copiable');
+      buttonEl.setAttribute('copy-for', 'copiable');
 
       el.appendChild(divEl);
       el.appendChild(buttonEl);
@@ -51,8 +51,8 @@ describe(localName, () => {
       strictEqual(
         el.innerHTML,
         [
-          '<div clipboard-copy-id="copiable">Hello, World!</div>',
-          '<button clipboard-copy-for="copiable">Copy</button>',
+          '<div copy-id="copiable">Hello, World!</div>',
+          '<button copy-for="copiable">Copy</button>',
         ].join(''),
         `Expected nodes (div + button) in light DOM`);
       strictEqual(getAssignedNodes(el).length, 2, `Expected assigned nodes`);
@@ -64,10 +64,10 @@ describe(localName, () => {
       const containerEl = document.createElement('div');
 
       divEl.textContent = 'Hello, World!';
-      divEl.setAttribute('clipboard-copy-id', 'copiable');
+      divEl.setAttribute('copy-id', 'copiable');
 
       buttonEl.textContent = 'Copy';
-      buttonEl.setAttribute('clipboard-copy-for', 'copiable');
+      buttonEl.setAttribute('copy-for', 'copiable');
 
       containerEl.appendChild(divEl);
       containerEl.appendChild(buttonEl);
@@ -80,8 +80,8 @@ describe(localName, () => {
         el.innerHTML,
         [
           '<div>',
-          '<div clipboard-copy-id="copiable">Hello, World!</div>',
-          '<button clipboard-copy-for="copiable">Copy</button>',
+          '<div copy-id="copiable">Hello, World!</div>',
+          '<button copy-for="copiable">Copy</button>',
           '</div>',
         ].join(''),
         `Expected nodes (div + button) in light DOM`);
@@ -93,10 +93,10 @@ describe(localName, () => {
       const buttonEl = document.createElement('button');
 
       divEl.textContent = 'Hello, World!';
-      divEl.setAttribute('clipboard-copy-id', 'copiable');
+      divEl.setAttribute('copy-id', 'copiable');
 
       buttonEl.textContent = 'Copy';
-      buttonEl.setAttribute('clipboard-copy-for', 'copiable');
+      buttonEl.setAttribute('copy-for', 'copiable');
 
       el.appendChild(divEl);
       el.appendChild(buttonEl);
@@ -108,8 +108,8 @@ describe(localName, () => {
       strictEqual(
         el.innerHTML,
         [
-          '<div clipboard-copy-id="copiable">Hello, World!</div>',
-          '<button clipboard-copy-for="copiable">Copy</button>',
+          '<div copy-id="copiable">Hello, World!</div>',
+          '<button copy-for="copiable">Copy</button>',
         ].join(''),
         `Expected nodes (div + button) in light DOM`);
       strictEqual(getAssignedNodes(el).length, 2, `Expected assigned nodes`);
