@@ -99,7 +99,7 @@ $ npm install @reallyland/really-clipboard-copy
 
 ## Demo
 
-[Simple demo at JSBin]
+[Demo@StackBlitz]
 
 ## License
 
@@ -118,7 +118,7 @@ $ npm install @reallyland/really-clipboard-copy
 [wre-url]: https://developers.google.com/search/docs/guides/rendering
 [wre-2019-url]: https://www.deepcrawl.com/blog/news/what-version-of-chrome-is-google-actually-using-for-rendering
 [ReallyClipboardCopy]: /api-references.md#reallyclipboardcopy
-[Simple demo at JSBin]: https://output.jsbin.com/cuhewinupu
+[Demo@StackBlitz]: https://really-clipboard-copy.stackblitz.io
 
 <!-- MDN -->
 [array-mdn-url]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array
