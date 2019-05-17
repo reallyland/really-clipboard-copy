@@ -115,6 +115,35 @@ describe(localName, () => {
       strictEqual(getAssignedNodes(el).length, 2, `Expected assigned nodes`);
     });
 
+    it(`renders with 'sync' attribute`, async () => {
+      const divEl = document.createElement('div');
+      const buttonEl = document.createElement('button');
+
+      divEl.textContent = 'Hello, World!';
+      divEl.setAttribute('copy-id', 'copiable');
+
+      buttonEl.textContent = 'Copy';
+      buttonEl.setAttribute('copy-for', 'copiable');
+
+      el.appendChild(divEl);
+      el.appendChild(buttonEl);
+
+      el.sync = true;
+      el.idSlot = 'copy-id';
+      el.forSlot = 'copy-for';
+      await el.updateComplete;
+
+      strictEqual(
+        el.innerHTML,
+        [
+          '<div copy-id="copiable">Hello, World!</div>',
+          '<button copy-for="copiable">Copy</button>',
+        ].join(''),
+        `Expected nodes (div + button) in light DOM`);
+      strictEqual(el.hasAttribute('sync'), true, `'sync' attribute not set`);
+      strictEqual(getAssignedNodes(el).length, 2, `Expected assigned nodes`);
+    });
+
   });
 
 });

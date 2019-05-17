@@ -43,15 +43,18 @@ describe(localName, () => {
     });
 
     it(`renders with defined attributes`, async () => {
+      el.setAttribute('sync', '');
       el.setAttribute('idslot', 'id');
       el.setAttribute('forslot', 'for');
       await el.updateComplete;
 
       strictEqual(el.getAttribute('forslot'), 'for', `'forslot' not set`);
       strictEqual(el.getAttribute('idslot'), 'id', `'idslot' not set`);
+      strictEqual(el.getAttribute('sync'), '', `'sync' not set`);
 
       strictEqual(el.forSlot, 'for', `'forSlot' not updated`);
       strictEqual(el.idSlot, 'id', `'idSlot' not updated`);
+      strictEqual(el.sync, true, `'sync' not updated`);
 
       strictEqual(el.innerHTML, '', `Expected no nodes in light DOM`);
       strictEqual(

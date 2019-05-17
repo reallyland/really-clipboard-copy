@@ -53,6 +53,9 @@ export class ReallyClipboardCopy extends LitElement {
   @property({ type: String })
   public idSlot: string = 'copy-id';
 
+  @property({ type: Boolean, reflect: true })
+  public sync: boolean = false;
+
   private _idElement?: HTMLElement;
 
   private get _slot() {
@@ -99,6 +102,9 @@ export class ReallyClipboardCopy extends LitElement {
   }
 
   private async _copyText() {
+    let copySuccess = false;
+    let contentValue = '';
+
     try {
       const idElement = this._idElement;
 
@@ -107,11 +113,16 @@ export class ReallyClipboardCopy extends LitElement {
       const isInputElement = idElement instanceof HTMLInputElement;
       const isTextareaElement = idElement instanceof HTMLTextAreaElement;
       const isAnchorElement = idElement instanceof HTMLAnchorElement;
-      const contentValue = (isInputElement || isTextareaElement ?
+
+      contentValue = (isInputElement || isTextareaElement ?
         (idElement as HTMLInputElement).value :
         (isAnchorElement ? (idElement as HTMLAnchorElement).href : idElement.textContent)) || '';
 
-      if ('clipboard' in navigator) return await navigator.clipboard.writeText(contentValue);
+      if (!this.sync && 'clipboard' in navigator) {
+        await navigator.clipboard.writeText(contentValue);
+        copySuccess = true;
+        return;
+      }
 
       const nodeObj = toCopyNode(
         idElement,
@@ -136,22 +147,25 @@ export class ReallyClipboardCopy extends LitElement {
        *
        * For in-depth implementation details of the `copy` command, visit https://bit.ly/2XxcXDF.
        */
-      const copyStatus = document.execCommand('copy');
+      copySuccess = document.execCommand('copy');
       selection.removeAllRanges();
 
       if (nodeObj.temporary) document.body.removeChild(copyNode);
-      if (!copyStatus) throw new Error('Failed to copy');
-
-      this.dispatchEvent(new CustomEvent('copy-success', {
-        bubbles: true,
-        composed: true,
-      }));
+      if (!copySuccess) throw new Error('Failed to copy');
     } catch (e) {
       this.dispatchEvent(new CustomEvent('copy-error', {
         detail: e,
         bubbles: true,
         composed: true,
       }));
+    } finally {
+      if (copySuccess) {
+        this.dispatchEvent(new CustomEvent('copy-success', {
+          detail: { value: contentValue },
+          bubbles: true,
+          composed: true,
+        }));
+      }
     }
   }
 

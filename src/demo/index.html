@@ -95,8 +95,7 @@
     </header>
 
     <section>
-      <h2>Code snippet generator</h2>
-
+      <h2>Copy &lt;input&gt;</h2>
       <really-clipboard-copy>
         <div class="container">
           <input
@@ -108,7 +107,10 @@
           <button copy-for="copiable" class="copy-btn">Copy Me</button>
         </div>
       </really-clipboard-copy>
+    </section>
 
+    <section>
+      <h2>Copy &lt;textarea&gt;</h2>
       <really-clipboard-copy>
         <div class="container">
           <textarea
@@ -119,7 +121,10 @@
           <button copy-for="copiable" class="copy-btn">Copy content</button>
         </div>
       </really-clipboard-copy>
+    </section>
 
+    <section>
+      <h2>Copy &lt;pre&gt;</h2>
       <really-clipboard-copy>
         <div class="container">
           <pre
@@ -134,7 +139,10 @@
           <button copy-for="copiable" class="copy-btn">Copy quote</button>
         </div>
       </really-clipboard-copy>
+    </section>
 
+    <section>
+      <h2>Copy &lt;a&gt;</h2>
       <really-clipboard-copy>
         <a
           copy-id="copiable"
@@ -143,6 +151,21 @@
           rel="noopener noreferrer">Example.com</a>
 
         <button copy-for="copiable" class="copy-btn">Copy link</button>
+      </really-clipboard-copy>
+    </section>
+
+    <section>
+      <h2>Copy &lt;input&gt; with `sync`</h2>
+      <really-clipboard-copy sync>
+        <div class="container">
+          <input
+            class="copyable"
+            copy-id="copiable"
+            type="text"
+            value="You're awesome!" />
+
+          <button copy-for="copiable" class="copy-btn">Copy Me</button>
+        </div>
       </really-clipboard-copy>
     </section>
 

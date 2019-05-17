@@ -39,13 +39,16 @@ describe(localName, () => {
     });
 
     it(`renders with defined properties`, async () => {
+      el.sync = true;
       el.forSlot = 'copy-for';
       el.idSlot = 'copy-id';
       await el.updateComplete;
 
       strictEqual(el.forSlot, 'copy-for', `'forSlot' not matched`);
       strictEqual(el.idSlot, 'copy-id', `'idSlot' not matched`);
+      strictEqual(el.sync, true, `'sync' not matched`);
       strictEqual(el.innerHTML, '', `Expected no nodes in light DOM`);
+      strictEqual(el.hasAttribute('sync'), true, `'sync' attribute not set`);
       strictEqual(
         getAssignedNodes(el).length,
         0,
