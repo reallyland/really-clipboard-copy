@@ -2,6 +2,12 @@ interface Slotted {
   id: HTMLElement | null;
   for: HTMLElement | null;
 }
+export interface CopySuccess {
+  value: string;
+}
+export interface CopyError {
+  reason: Error;
+}
 
 import {
   css,
@@ -9,6 +15,7 @@ import {
   html,
   LitElement,
   property,
+  query,
 } from 'lit-element';
 
 const localName = 'really-clipboard-copy';
@@ -56,11 +63,10 @@ export class ReallyClipboardCopy extends LitElement {
   @property({ type: Boolean, reflect: true })
   public sync: boolean = false;
 
-  private _idElement?: HTMLElement;
+  @query('slot')
+  private _slot?: HTMLSlotElement;
 
-  private get _slot() {
-    return this.shadowRoot!.querySelector('slot') as HTMLSlotElement;
-  }
+  private _idElement?: HTMLElement;
 
   protected render() {
     return html`<slot @slotchange="${this._assignSlotted}"></slot>`;
@@ -153,14 +159,17 @@ export class ReallyClipboardCopy extends LitElement {
       if (nodeObj.temporary) document.body.removeChild(copyNode);
       if (!copySuccess) throw new Error('Failed to copy');
     } catch (e) {
-      this.dispatchEvent(new CustomEvent('copy-error', {
-        detail: e,
+      this.dispatchEvent(new CustomEvent<CopyError>('copy-error', {
+        /**
+         * NOTE(motss): On Firefox, `undefined` is returned when Clipboard API fails to copy.
+         */
+        detail: { reason: e || new Error('Failed to copy') },
         bubbles: true,
         composed: true,
       }));
     } finally {
       if (copySuccess) {
-        this.dispatchEvent(new CustomEvent('copy-success', {
+        this.dispatchEvent(new CustomEvent<CopySuccess>('copy-success', {
           detail: { value: contentValue },
           bubbles: true,
           composed: true,
@@ -174,6 +183,11 @@ export class ReallyClipboardCopy extends LitElement {
 declare global {
   interface HTMLElementTagNameMap {
     [localName]: ReallyClipboardCopy;
+  }
+
+  interface HTMLElementEventMap {
+    'copy-success': CustomEvent<CopySuccess>;
+    'copy-error': CustomEvent<CopyError>;
   }
 
 }

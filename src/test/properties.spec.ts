@@ -1,13 +1,14 @@
 import { ReallyClipboardCopy } from '../really-clipboard-copy.js';
 
 import '../really-clipboard-copy.js';
+import { getTestName } from './test-helpers.js';
 
 const { strictEqual } = chai.assert;
 const localName = 'really-clipboard-copy';
 
 let el: ReallyClipboardCopy;
 
-describe(localName, () => {
+describe(getTestName(localName), () => {
   describe('properties', () => {
     const getAssignedNodes = (node: HTMLElement) => {
       const slotEl = node.shadowRoot!.querySelector('slot') as HTMLSlotElement;
